@@ -8,18 +8,63 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+struct Path<T: UIViewController> {
+    let destination: T
+    init(destination: T) {
+        self.destination = destination
+    }
+}
+
+protocol Pathable {
+
+}
+
+
+class ViewController1: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
+        view.backgroundColor = .red
+
+        _ = toVC2().destination.toVC3()
+
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-
 }
+
+extension ViewController1: Pathable {
+    func toVC2() -> Path<ViewController2> {
+        let controller = ViewController2()
+        navigationController?.pushViewController(controller, animated: false)
+        return Path(destination: controller)
+    }
+}
+
+
+class ViewController2: UIViewController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        view.backgroundColor = .blue
+    }
+}
+
+extension ViewController2: Pathable {
+    func toVC3() -> Path<ViewController3>{
+        let controller = ViewController3()
+        navigationController?.pushViewController(controller, animated: false)
+        return Path(destination: controller)
+    }
+}
+
+class ViewController3: UIViewController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        view.backgroundColor = .green
+    }
+}
+
 
