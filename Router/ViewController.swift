@@ -8,8 +8,39 @@
 
 import UIKit
 
-
 typealias Node = UIViewController & Pathable
+
+
+// TODO: Deeplink対応
+// TODO: 現在と同じ階層にいるかどうかの判定（差分）
+// TODO: 宣言的に画面遷移のパターンを記述→画面遷移図の自動生成
+
+
+// idea:
+
+class HogeViewController: UIViewController {}
+
+class Router {
+    static let shered: Router = .init()
+}
+
+protocol Routable {
+    var router: Router { get }
+}
+
+extension Routable {
+    var router: Router {
+        return Router.shered
+    }
+}
+
+extension HogeViewController: Routable {
+    func toFugaVC() {
+        
+    }
+}
+
+//
 
 struct Path<S: Node, D: Node> {
 
